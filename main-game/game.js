@@ -4,26 +4,51 @@ function getComputerChoice(){
     return availableChoices[choice].toUpperCase();
 }
 
-function getHumanChoice() {
-    let choice = prompt("Enter your choice: ");
+const btnRock = document.getElementById("btn-rock");
+const btnPaper = document.getElementById("btn-paper");
+const btnScissors = document.getElementById("btn-scissors");
+const result = document.getElementById("result");
+const score = document.getElementById("score");
+const winner = document.getElementById("winner");
+
+function getHumanChoice(choice) {
     return choice;
 }
+
+btnRock.addEventListener("click", () => {
+    upper = String(getHumanChoice("rock")).toUpperCase();
+    playRound(getHumanChoice(upper), getComputerChoice());
+})
+btnPaper.addEventListener("click", () => {
+    upper = String(getHumanChoice("paper")).toUpperCase();
+    playRound(getHumanChoice(upper), getComputerChoice());
+})
+btnScissors.addEventListener("click", () => {
+    upper = String(getHumanChoice("scissors")).toUpperCase();
+    playRound(getHumanChoice(upper), getComputerChoice());
+})
 
 let humanScore = 0; 
 let computerScore = 0;
 
-function playRound() {
-    let humanChoice = String(getHumanChoice()).toUpperCase();
-    let computerChoice = getComputerChoice();
-    if (humanChoice === "ROCK" && computerChoice === "SCISSORS" || humanChoice === "PAPER" && computerChoice === "ROCK" || humanChoice === "SCISSORS" && computerChoice === "PAPER") {
-        console.log(`You win! ${humanChoice} beats ${computerChoice}`);
+function playRound(humanChoice , computerChoice) {
+    if ((humanChoice === "ROCK" && computerChoice === "SCISSORS" )||
+        (humanChoice === "PAPER" && computerChoice === "ROCK" )||
+        (humanChoice === "SCISSORS" && computerChoice === "PAPER")) {
+        result.textContent = `You win! ${humanChoice} beats ${computerChoice}`;
         humanScore++;
     } else if (humanChoice === computerChoice) {
-        console.log(`It's a tie! Both chose ${humanChoice}`);
+        result.textContent = `It's a tie! You both chose ${humanChoice}`;
     } else {
-        console.log(`You lose! ${computerChoice} beats ${humanChoice}`);
+        result.textContent = `You lose! ${computerChoice} beats ${humanChoice}`;
         computerScore++;
     }
-    console.log(`Current Score - You: ${humanScore}, Computer: ${computerScore}`);
+    score.textContent = `Score: You ${humanScore} - Computer ${computerScore}`;
+
+    if (humanScore === 5) {
+    winner.textContent = "congratulations! You won the game!";
+    }else if (computerScore === 5) {
+        winner.textContent = "Sorry! The computer won the game."
+    }
+
 }
-playRound();
